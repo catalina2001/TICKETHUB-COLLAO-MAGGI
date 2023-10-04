@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="text-right">
+        <a href="{{ url_for('crear_orden') }}" class="btn btn-primary mb-3"> 
+            <i class="fas fa-plus"></i> Crear Orden</a>
+            <a href="{{ url_for('logout') }}" class="btn btn-danger mb-3">
+            <i class="fas fa-door-open"></i> Cerrar Sesión</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Conductor</th>
+                <th>Estado OT</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for orden in ordenes %}
+            <tr>
+                <td>{{ orden[0] }}</td>
+                <td>{{ orden[1] }}</td>
+                <td>{{ orden[2] }}</td>
+                <td>{{ orden[8] }}</td>
+                <td>
+                    <a href="{{ url_for('editar_orden', id=orden[0]) }}" class="btn btn-warning">
+                        <i class="fas fa-pencil-alt"></i> </a> 
+                    <a href="{{ url_for('eliminar_orden', id=orden[0]) }}" class="btn btn-danger">
+                        <i class="fas fa-trash"></i></a>
+                        {% if orden[8] == "FACTURADA" %}
+                        <a href="{{ url_for('generate_pdf', id=orden[0]) }}" class="btn btn-info">
+                            <i class="fas fa-file-pdf"></i>
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

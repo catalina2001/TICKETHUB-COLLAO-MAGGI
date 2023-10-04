@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Orden</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Estilos personalizados */
+        .form-control:focus {
+            border-color: #007BFF;
+            box-shadow: 0 0 5px #5CB3FF;
+        }
+
+        button.btn-primary:hover {
+            background-color: #387c0b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="card">
+                        <!-- Título centrado con fondo verde -->
+                        <div class="card-header text-center" style="background-color: #387c0b8d; color: #ffffff;">
+                            <h2>Editar Orden</h2>
+                        </div>
+            <div class="card-body">
+        <form action="{{ url_for('editar_orden', id=orden.id) }}" method="post">
+            
+            <div class="form-group">
+                <label>Descripción:</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-sticky-note"></i></span>
+                    </div>
+                    <input type="text" name="descripcion" class="form-control" value="{{ orden[1] }}" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Conductor:</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input type="text" name="conductor" class="form-control" value="{{ orden[2] }}" required>
+                </div>
+            </div>
+
+            <!-- ... y así para cada campo -->
+            <div class="form-group">
+                <label>Numero Maquina:</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-cogs"></i></span>
+                    </div>
+                    <input type="text" name="numero_maquina" class="form-control" value="{{ orden[3] }}" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Patente Maquina:</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-car"></i></span>
+                    </div>
+                    <input type="text" name="patente_maquina" class="form-control" value="{{ orden[4] }}" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Falla Reportada:</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-exclamation-triangle"></i></span>
+                    </div>
+                    <input type="text" name="falla_reportada" class="form-control" value="{{ orden[5] }}" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Fecha Programada:</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                    </div>
+                    <input type="text" name="fecha_entrega_programada" class="form-control" value="{{ orden[6] }}" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>¿Necesita repuesto?:</label><br>
+                <input type="radio" name="necesita_repuestos" value="1" {{ 'checked' if orden[7] == 1 else '' }} required> Sí
+                <input type="radio" name="necesita_repuestos" value="0" {{ 'checked' if orden[7] == 0 else '' }} required> No
+            </div>
+            <!-- Aquí insertamos los campos de los repuestos -->
+            <div class="form-group">
+                <label>Aceite Motor - Precio: $4,000</label>
+                <input type="number" name="repuesto_Aceite_Motor" class="form-control" min="0" placeholder="0" value="{{ repuestos['Aceite Motor'] or 0 }}">
+            </div>
+            <div class="form-group">
+                <label>Foco Delantero - Precio: $12,000</label>
+                <input type="number" name="repuesto_Foco_Delantero" class="form-control" min="0" placeholder="0" value="{{ repuestos['Foco Delantero'] or 0 }}">
+            </div>
+            <div class="form-group">
+                <label>Botón Timbre - Precio: $5,000</label>
+                <input type="number" name="repuesto_Boton_Timbre" class="form-control" min="0" placeholder="0" value="{{ repuestos['Botón Timbre'] or 0 }}">
+            </div>
+            <div class="form-group">
+                <label>Válvula Accionamiento - Precio: $20,000</label>
+                <input type="number" name="repuesto_Valvula_Accionamiento" class="form-control" min="0" placeholder="0" value="{{ repuestos['Válvula Accionamiento'] or 0 }}">
+            </div>
+            <div class="form-group">
+                <label>Rodamiento Embrague - Precio: $40,000</label>
+                <input type="number" name="repuesto_Rodamiento_Embrague" class="form-control" min="0" placeholder="0" value="{{ repuestos['Rodamiento Embrague'] or 0 }}">
+            </div>
+            <div class="form-group">
+                <label>Motor Partida - Precio: $370,000</label>
+                <input type="number" name="repuesto_Motor_Partida" class="form-control" min="0" placeholder="0" value="{{ repuestos['Motor Partida'] or 0 }}">
+            </div>
+            <!-- (y así sucesivamente para cada repuesto) -->
+
+ 
+            <div class="form-group">
+                <label>Estado OT:</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-sync-alt"></i></span>
+                    </div>
+                    <select name="estado_ot" class="form-control" required>
+                        <option value="EN CURSO" {{ 'selected' if orden[8] == 'EN CURSO' else '' }}>EN CURSO</option>
+                        <option value="EN ESPERA" {{ 'selected' if orden[8] == 'EN ESPERA' else '' }}>EN ESPERA</option>
+                        <option value="FACTURADA" {{ 'selected' if orden[8] == 'FACTURADA' else '' }}>FACTURADA</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group d-flex justify-content-center">
+                <button type="submit" class="btn" style="background-color: #387c0b; color: #ffffff;">Actualizar</button>
+            </div>
+            
+        </form>
+        
+    </div>
+</div>
+    </div>
+</body>
+
+</html>

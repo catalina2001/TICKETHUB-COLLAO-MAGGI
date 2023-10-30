@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Factura</title>
+</head>
+<body>
+    <h2>Factura de Orden</h2>
+    <p>Descripción: {{ orden.descripcion }}</p>
+    <p>Conductor: {{ orden.conductor }}</p>
+    <table border="1" cellspacing="0" cellpadding="5">
+        <thead>
+            <tr>
+                <th>Repuesto (Descripción)</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Total por Repuesto</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set total = [0] %}
+            {% for repuesto, cantidad in repuestos.items() %}
+                {% if cantidad > 0 %}
+                {% set precio_unitario = precios[repuesto] %}
+                {% set total_repuesto = cantidad * precio_unitario %}
+                {% set _ = total.append(total.pop() + total_repuesto) %}
+                <tr>
+                    <td>{{ repuesto }}</td>
+                    <td>{{ cantidad }}</td>
+                    <td>{{ precio_unitario }}</td>
+                    <td>{{ total_repuesto }}</td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+            <tr>
+                <td colspan="3" style="text-align: right;">Total:</td>
+                <td>{{ total[0] | int }}</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: right;">IVA (19%):</td>
+                <td>{{ (total[0] * 0.19) | int }}</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: right;">Total + IVA:</td>
+                <td>{{ (total[0] * 1.19) | int }}</td>
+            </tr>            
+        </tbody>
+    </table>
+</body>
+</html>

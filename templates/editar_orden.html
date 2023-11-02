@@ -47,10 +47,16 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
-                    <input type="text" name="conductor" class="form-control" value="{{ orden[2] }}" required>
+                    <select name="conductor" class="form-control" required>
+                        <option value="fermin" {% if orden[2] == 'fermin' %}selected{% endif %}>Fermin Montes</option>
+                        <option value="felipe" {% if orden[2] == 'felipe' %}selected{% endif %}>Felipe Muñoz</option>
+                        <option value="cristobal" {% if orden[2] == 'cristobal' %}selected{% endif %}>Cristobal Baeza</option>
+                        <option value="miguel" {% if orden[2] == 'miguel' %}selected{% endif %}>Miguel Manriquez</option>
+                        <option value="victoria" {% if orden[2] == 'victoria' %}selected{% endif %}>Victoria Pardo</option>
+                        <option value="alejandra" {% if orden[2] == 'alejandra' %}selected{% endif %}>Alejandra Maldonado</option>
+                    </select>
                 </div>
             </div>
-
             <!-- ... y así para cada campo -->
             <div class="form-group">
                 <label>Numero Maquina:</label>

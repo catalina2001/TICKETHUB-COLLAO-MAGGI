@@ -42,6 +42,10 @@ def init_db():
         if "repuestos" not in columns:
             cursor.execute("ALTER TABLE orders ADD COLUMN repuestos TEXT")
 
+        # Verificar si la columna obs_factura existe
+        if "obs_factura" not in columns:
+            cursor.execute("ALTER TABLE orders ADD COLUMN obs_factura TEXT")
+
         db.commit()
 
 def init_users_table():

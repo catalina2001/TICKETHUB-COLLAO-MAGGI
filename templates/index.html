@@ -7,6 +7,18 @@
             <a href="{{ url_for('logout') }}" class="btn btn-danger mb-3">
             <i class="fas fa-door-open"></i> Cerrar Sesión</a>
     </div>
+    <form action="{{ url_for('generar_reporte') }}" method="post">
+        <div>
+            <label for="fecha_inicio">Fecha de inicio:</label>
+            <input type="date" name="fecha_inicio" required>
+        </div>
+        <div>
+            <label for="fecha_fin">Fecha de fin:</label>
+            <input type="date" name="fecha_fin" required>
+        </div>
+        <button type="submit">Generar Reporte</button>
+    </form>
+    
     <table class="table table-striped">
         <thead>
             <tr>

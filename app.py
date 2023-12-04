@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, make_response, render_template, request, redirect, url_for, flash
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import session
@@ -31,7 +31,7 @@ def init_db():
                 numero_maquina TEXT NOT NULL,
                 patente_maquina TEXT NOT NULL,
                 falla_reportada TEXT NOT NULL,
-                fecha_entrega_programada TEXT NOT NULL,
+                fecha_entrega_programada DATE NOT NULL,
                 necesita_repuestos INTEGER NOT NULL,
                 estado_ot TEXT NOT NULL
             )
@@ -134,6 +134,35 @@ def listar_ordenes():
     ordenes = conn.execute('SELECT * FROM orders').fetchall()
     conn.close()
     return render_template('index.html', ordenes=ordenes)
+
+
+#nuevo nuevo
+# ...
+@app.route('/generar_reporte', methods=['POST'])
+def generar_reporte():
+    fecha_inicio = request.form['fecha_inicio']
+    fecha_fin = request.form['fecha_fin']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM orders WHERE fecha_entrega_programada BETWEEN ? AND ?", (fecha_inicio, fecha_fin))
+    ordenes = cursor.fetchall()
+    conn.close()
+
+    rendered = render_template('reporte.html', ordenes=ordenes)
+
+    # Utiliza la misma configuración de pdfkit que en generate_pdf
+    config = pdfkit.configuration(wkhtmltopdf='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
+    pdf = pdfkit.from_string(rendered, False, configuration=config)
+    
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'attachment; filename=reporte.pdf'
+    return response
+
+# ...
+
+#nuevo nuevo
 
 @app.route('/crear_orden', methods=['GET', 'POST'])
 def crear_orden():

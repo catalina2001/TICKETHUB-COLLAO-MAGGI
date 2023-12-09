@@ -94,7 +94,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                     </div>
-                    <input type="text" name="fecha_entrega_programada" class="form-control" value="{{ orden[6] }}" required>
+                    <input type="date" name="fecha_entrega_programada" class="form-control" value="{{ orden[6] }}" required>
                 </div>
             </div>
 
@@ -143,10 +143,6 @@
                         <option value="FACTURADA" {{ 'selected' if orden[8] == 'FACTURADA' else '' }}>FACTURADA</option>
                     </select>
                 </div>
-            </div>
-            <div class="form-group">
-                <label>Observación Factura</label>
-                <input type="text" name="obs_factura" class="form-control" placeholder="observación factura" value="">
             </div>
             
             <div class="form-group d-flex justify-content-center">
